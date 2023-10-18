@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Targets</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Alvos Localizados</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Imagem</th>
+                <th>Endereço</th>
+                <th>Informações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in data %}
+            <tr>
+                <td><img src="{{ url_for('uploaded_file', filename=entry[0]) }}" alt="Imagem não disponivel" width="100"></td>
+                <td><a href="{{ entry[1] }}" target="_blank">Ver no Google Maps</a></td>
+                <td>
+                    Provedor: {{ entry[2].split(", ")[0] }}<br>
+                    Cidade: {{ entry[2].split(", ")[1] }}<br>
+                    Estado: {{ entry[2].split(", ")[2] }}<br>
+                    País: {{ entry[2].split(", ")[3] }}<br>
+                    IP: {{ entry[2].split(", ")[4] }}<br>
+                    Data e Hora: {{ entry[3] }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
