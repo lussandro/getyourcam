@@ -41,7 +41,7 @@ pip install -r requirements.txt
 Execute o script para iniciar a aplicação e obter o link externo:
 
 bash
-
+    chmod +x 
     ./start.sh
 
     Acesse o link fornecido pelo Serveo ou, localmente, vá para http://localhost:5000.
