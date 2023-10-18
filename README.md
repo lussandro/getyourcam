@@ -52,10 +52,16 @@ bash
     usuario: admin
     senha: secret (vc pode mudar no app.py o usuario e senha)
     Geolocalização: Utilize a base de dados GeoLite2 para obter informações detalhadas sobre os IPs coletados.
+ 
+ Geolite2
+ O módulo `geoip2` utiliza um banco de dados gratuito da Maxmind chamado "GeoLite2-City.mmdb
+    Como o nosso sistema usa o Geolite2, você precisa acessar o site https://www.maxmind.com/
+    E baixar o arquivo de licença gratuita "GeoLite2-City.mmdb" e coloca na raiz do projeto.
 
 📜 Licença
 
-Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
+    Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
+
 🤝 Contribuições
 
-Contribuições são bem-vindas! Sinta-se à vontade para abrir uma issue ou enviar um pull request.
+    Contribuições são bem-vindas! Sinta-se à vontade para abrir uma issue ou enviar um pull request.
